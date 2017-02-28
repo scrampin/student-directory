@@ -1,7 +1,7 @@
 student_count = 11
 
 def input_students
-  months = [:january, :february, :march, :april, :june, :july, :august, :september, :october, :november, :december]
+  months = ["january", "february", "march", "april", "june", "july", "august", "september", "october", "november", "december"]
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   #create an empty array
@@ -10,16 +10,20 @@ def input_students
   name = gets.chomp
   puts "What is #{name}\'s hobby?"
   hobby = gets.chomp
+  while hobby == ""
+    puts "Please enter a hobby"
+    hobby = gets.chomp
+  end
   puts "What is #{name}\'s cohort?"
-  cohort = gets.chomp.downcase.to_sym
-  if !months.include? cohort
+  cohort = gets.chomp.downcase
+  while !months.include? cohort || cohort == ""
     puts "Have you made a typo?"
-    cohort = gets.chomp.downcase.to_sym
+    cohort = gets.chomp.downcase
   end
   #while the name is not empty, repeat this code
   while !name.empty? do
     #add the student hash to the array
-    students << {:name => name, :hobby => hobby, :cohort => cohort}
+    students << {:name => name, :hobby => hobby, :cohort => cohort.to_sym}
     if students.length == 1
       puts "Now we have 1 student"
     else
@@ -31,11 +35,15 @@ def input_students
     if !name.empty?
       puts "hobby of #{name}:"
       hobby = gets.chomp
+      while hobby == ""
+        puts "Please enter a hobby"
+        hobby = gets.chomp
+      end
       puts "cohort of #{name}:"
-      cohort = gets.chomp.downcase.to_sym
-      if !months.include? cohort
+      cohort = gets.chomp.downcase
+      while !months.include? cohort || cohort == nil
         puts "Have you made a typo?"
-        cohort = gets.chomp.downcase.to_sym
+        cohort = gets.chomp.downcase
       end
     end
   end
@@ -51,7 +59,7 @@ end
 def print(students)
   i = 0
   until i == students.length
-    puts "#{i+1}: #{students[i][:name]}," + "#{students[i][:hobby]},".center(14) + "(#{students[i][:cohort]} cohort)".center(10)
+    puts "#{i+1}: #{students[i][:name]}," + "#{students[i][:hobby]},".center(14) + "(#{students[i][:cohort]} cohort)".center(10) if students[i][:name] != nil
     #if students[i][:name][0, 1].downcase == "s" && students[i][:name].length < 12
     i += 1
   end
