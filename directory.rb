@@ -1,9 +1,21 @@
 @students = [] #empty array accessible to all methods
 
+def save_students
+  #open the file for writing
+  file = File.open("students.csv", "w")
+  #iterate over the array of students
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
 
 def print_menu
     puts "1. Input the students"
     puts "2. Show the students"
+    puts "3. Save the list to students.csv"
     puts "9. Exit"
 end
 
@@ -21,6 +33,8 @@ def process(selection)
       print_header
       print_students_list
       print_footer
+      when "3"
+      save_students
       when "9"
       exit
       else
@@ -50,7 +64,7 @@ def input_students
   #while the name is not empty, repeat this code
   while !name.empty? do
     #add the student hash to the array
-    @students << {:name => name, :hobby => hobby, :cohort => cohort.to_sym}
+    @students << {:name => name, :cohort => cohort.to_sym}
     if @students.length == 1
       puts "Now we have 1 student"
     else
@@ -78,7 +92,7 @@ end
 def print_students_list
   i = 0
   until i == @students.length
-    puts "#{i+1}: #{@students[i][:name]}," + "#{@students[i][:hobby]},".center(14) + "(#{@students[i][:cohort]} cohort)".center(10) if @students[i][:name] != nil
+    puts "#{i+1}: #{@students[i][:name]}," + "(#{@students[i][:cohort]} cohort)".center(10) if @students[i][:name] != nil
     i += 1
   end
 end
