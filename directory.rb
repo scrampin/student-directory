@@ -1,6 +1,7 @@
 student_count = 11
 
 def input_students
+  months = [:january, :february, :march, :april, :june, :july, :august, :september, :october, :november, :december]
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   #create an empty array
@@ -9,12 +10,16 @@ def input_students
   name = gets.chomp
   puts "What is #{name}\'s hobby?"
   hobby = gets.chomp
-  puts "What is #{name}\'s starsign?"
-  starsign = gets.chomp
+  puts "What is #{name}\'s cohort?"
+  cohort = gets.chomp.downcase.to_sym
+  if !months.include? cohort
+    puts "Have you made a typo?"
+    cohort = gets.chomp.downcase.to_sym
+  end
   #while the name is not empty, repeat this code
   while !name.empty? do
     #add the student hash to the array
-    students << {:name => name, :hobby => hobby, :starsign => starsign, :cohort => :november}
+    students << {:name => name, :hobby => hobby, :cohort => cohort}
     puts "Now we have #{students.count} students"
     #get more data from the user
     puts "Another name:"
@@ -22,8 +27,12 @@ def input_students
     if !name.empty?
       puts "hobby of #{name}:"
       hobby = gets.chomp
-      puts "starsign of #{name}:"
-      starsign = gets.chomp
+      puts "cohort of #{name}:"
+      cohort = gets.chomp.downcase.to_sym
+      if !months.include? cohort
+        puts "Have you made a typo?"
+        cohort = gets.chomp.downcase.to_sym
+      end
     end
   end
   #return the array of students
@@ -38,7 +47,7 @@ end
 def print(students)
   i = 0
   until i == students.length
-    puts "#{i+1}: #{students[i][:name]}," + "#{students[i][:hobby]},".center(14) + "#{students[i][:starsign]},".center(10) + "(#{students[i][:cohort]} cohort)".center(10)
+    puts "#{i+1}: #{students[i][:name]}," + "#{students[i][:hobby]},".center(14) + "(#{students[i][:cohort]} cohort)".center(10)
     #if students[i][:name][0, 1].downcase == "s" && students[i][:name].length < 12
     i += 1
   end
