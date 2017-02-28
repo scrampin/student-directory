@@ -41,12 +41,6 @@ def input_students
   puts "To finish, just hit return twice"
   #get the first name
   name = gets.chomp
-  puts "What is #{name}\'s hobby?"
-  hobby = gets.chomp
-  while hobby == ""
-    puts "Please enter a hobby"
-    hobby = gets.chomp
-  end
   puts "What is #{name}\'s cohort?"
   cohort = gets.chomp.downcase
   while !months.include? cohort || cohort == ""
@@ -66,12 +60,6 @@ def input_students
     puts "Another name:"
     name = gets.chomp
     if !name.empty?
-      puts "hobby of #{name}:"
-      hobby = gets.chomp
-      while hobby == ""
-        puts "Please enter a hobby"
-        hobby = gets.chomp
-      end
       puts "cohort of #{name}:"
       cohort = gets.chomp.downcase
       while !months.include? cohort || cohort == nil
