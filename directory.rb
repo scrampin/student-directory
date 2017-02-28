@@ -7,17 +7,59 @@ def input_students
   students = []
   #get the first name
   name = gets.chomp
+  puts "What is #{name}\'s hobby?"
+  hobby = gets.chomp
+  puts "What is #{name}\'s starsign?"
+  starsign = gets.chomp
   #while the name is not empty, repeat this code
   while !name.empty? do
     #add the student hash to the array
-    students << {:name => name, :cohort => :november}
+    students << {:name => name, :hobby => hobby, :starsign => starsign, :cohort => :november}
     puts "Now we have #{students.count} students"
-    #get another name from the user
+    #get more data from the user
+    puts "Another name:"
     name = gets.chomp
+    if !name.empty?
+      puts "hobby of #{name}:"
+      hobby = gets.chomp
+      puts "starsign of #{name}:"
+      starsign = gets.chomp
+    end
   end
   #return the array of students
   students
 end
+
+def print_header
+  puts "The students of Villains Academy"
+  puts "-----------"
+end
+
+def print(students)
+  i = 0
+  until i == students.length
+    puts "#{i+1}: #{students[i][:name]}," + "#{students[i][:hobby]},".center(14) + "#{students[i][:starsign]},".center(10) + "(#{students[i][:cohort]} cohort)".center(10)
+    #if students[i][:name][0, 1].downcase == "s" && students[i][:name].length < 12
+    i += 1
+  end
+end
+
+#def print(students)
+#  students.each_with_index do |student, index|
+#    puts "#{index+1}: #{student[:name]} (#{student[:cohort]} cohort)" if student[:name][0, 1].downcase == "s" && student[:name].length < 12
+#  end
+#end
+
+def print_footer(names)
+  puts "Overall, we have #{names.count} great students"
+end
+
+#nothing happens until we call the methods
+
+students = input_students
+print_header
+print(students)
+print_footer(students)
 
 
 #students = [
@@ -33,25 +75,3 @@ end
 #            {:name => "Joffrey Baratheon", :cohort => :november},
 #            {:name => "Norman Bates", :cohort => :november},
 #]
-
-def print_header
-  puts "The students of Villains Academy"
-  puts "-----------"
-end
-
-def print(students)
-    students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
-    end
-end
-
-def print_footer(names)
-  puts "Overall, we have #{names.count} great students"
-end
-
-#nothing happens until we call the methods
-
-students = input_students
-print_header
-print(students)
-print_footer(students)
