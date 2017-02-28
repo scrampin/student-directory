@@ -65,7 +65,7 @@ end
 
 #nothing happens until we call the methods
 
-students = input_students
+students = input_students.sort_by {|student| student[:cohort].to_s}
 print_header
 print(students)
 print_footer(students)
