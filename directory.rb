@@ -38,7 +38,13 @@ def print_menu
   puts "2. Show the students"
   puts "3. Save the list to students.csv"
   puts "4. Load the list from students.csv"
+  puts "5. Sort the list of students by cohort"
   puts "9. Exit"
+end
+
+def sort_students
+  @students = @students.sort_by {|student| student[:cohort].to_s}
+  puts "Students sorted"
 end
 
 def show_students
@@ -59,6 +65,8 @@ def process(selection)
       save_students
       when "4"
       load_students
+      when "5"
+      sort_students
       when "9"
       exit
       else
