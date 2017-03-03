@@ -28,10 +28,11 @@ end
 def save_students
   puts "Please choose the file to save to"
   filename = gets.chomp
+  student_data = []
   @students.each do |student|
-    student_data = [student[:name], student[:cohort].to_s]
+    student_data.push([student[:name], student[:cohort].to_s])
   end
-  CSV.open(filename, 'w') do |csv_object|
+  CSV.open(filename, 'w')
     student_data.each do |row_array|
       csv_object << row_array
     end
