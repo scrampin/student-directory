@@ -1,5 +1,9 @@
 @students = [] #empty array accessible to all methods
 
+def add_students
+  @students << {:name => @name, :cohort => @cohort.to_sym}
+end
+
 def try_load_students
   filename = ARGV.first
   return if filename.nil?
@@ -15,8 +19,8 @@ end
 def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
-    name, cohort = line.chomp.split(',')
-    @students << {:name => name, :cohort => cohort.to_sym}
+    @name, @cohort = line.chomp.split(',')
+    add_students
   end
   file.close
 end
@@ -86,17 +90,16 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   #get the first name
-  name = STDIN.gets.chomp
-  puts "What is #{name}\'s cohort?"
-  cohort = STDIN.gets.chomp.downcase
-  while !months.include? cohort || cohort == ""
+  @name = STDIN.gets.chomp
+  puts "What is #{@name}\'s cohort?"
+  @cohort = STDIN.gets.chomp.downcase
+  while !months.include? @cohort || @cohort == ""
     puts "Have you made a typo?"
-    cohort = STDIN.gets.chomp.downcase
+    @cohort = STDIN.gets.chomp.downcase
   end
   #while the name is not empty, repeat this code
-  while !name.empty? do
-    #add the student hash to the array
-    @students << {:name => name, :cohort => cohort.to_sym}
+  while !@name.empty? do
+    add_students
     if @students.length == 1
       puts "Now we have 1 student"
     else
@@ -104,13 +107,13 @@ def input_students
     end
     #get more data from the user
     puts "Another name:"
-    name = STDIN.gets.chomp
-    if !name.empty?
-      puts "cohort of #{name}:"
-      cohort = STDIN.gets.chomp.downcase
-      while !months.include? cohort || cohort == nil
+    @name = STDIN.gets.chomp
+    if !@name.empty?
+      puts "cohort of #{@name}:"
+      @cohort = STDIN.gets.chomp.downcase
+      while !months.include? @cohort || @cohort == nil
         puts "Have you made a typo?"
-        cohort = STDIN.gets.chomp.downcase
+        @cohort = STDIN.gets.chomp.downcase
       end
     end
   end
