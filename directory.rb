@@ -1,3 +1,4 @@
+require 'csv'
 @students = [] #empty array accessible to all methods
 
 def add_students
@@ -8,7 +9,7 @@ def try_load_students
   filename = ARGV.first
   return if filename.nil?
   if File.exists?(filename)
-    load_students(filename)
+    load_students
     puts "Loaded #{@students.count} from #{filename}"
   else
     puts "Sorry, #{filename} does not exist"
@@ -16,32 +17,32 @@ def try_load_students
   end
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
-  file.readlines.each do |line|
-    @name, @cohort = line.chomp.split(',')
-    add_students
-  end
-  file.close
+def load_students
+  puts "Please specify the file to load from"
+  filename = gets.chomp
+  arr = CSV.read(filename)
+  students = []
+  arr.each {|row| students.push({:name => row[0], :cohort => row[1].to_sym})}
 end
 
 def save_students
-  #open the file for writing
-  file = File.open("students.csv", "w")
-  #iterate over the array of students
+  puts "Please choose the file to save to"
+  filename = gets.chomp
   @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+    student_data = [student[:name], student[:cohort].to_s]
   end
-  file.close
+  CSV.open(filename, 'w') do |csv_object|
+    student_data.each do |row_array|
+      csv_object << row_array
+    end
+  end
 end
 
 def print_menu
   puts "1. Input the students"
   puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
+  puts "3. Save the list to a file"
+  puts "4. Load the list from a file"
   puts "5. Sort the list of students by cohort"
   puts "9. Exit"
 end
@@ -107,7 +108,7 @@ def count_students
 end
 
 def input_students
-  @months = ["january", "february", "march", "april", "june", "july", "august", "september", "october", "november", "december"]
+  @months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   get_data
