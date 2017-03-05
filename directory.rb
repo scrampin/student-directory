@@ -26,17 +26,15 @@ def load_students
 end
 
 def save_students
-  puts "Please choose the file to save to"
-  filename = gets.chomp
-  student_data = []
+  #open the file for writing
+  file = File.open("students.csv", "w")
+  #iterate over the array of students
   @students.each do |student|
-    student_data.push([student[:name], student[:cohort].to_s])
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
   end
-  CSV.open(filename, 'w')
-    student_data.each do |row_array|
-      csv_object << row_array
-    end
-  end
+  file.close
 end
 
 def print_menu
